@@ -4,6 +4,7 @@ import {
   Switch,
   Route,
   Redirect,
+  Link,
 } from 'react-router-dom';
 import './App.css';
 import { Cast } from './components/Cast';
@@ -47,6 +48,16 @@ export class App extends Component {
     return (
       /*<div className="App">*/
       <Router>
+        <header>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/movies">Movies</Link>
+            </li>
+          </ul>
+        </header>
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/movies" exact component={MoviesPage} />
