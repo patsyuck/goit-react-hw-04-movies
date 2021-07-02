@@ -12,9 +12,7 @@ import { HomePage } from './components/HomePage';
 import { MovieDetailsPage } from './components/MovieDetailsPage';
 import { MoviesPage } from './components/MoviesPage';
 import { Reviews } from './components/Reviews';
-
-const API_KEY = '467d5570ee3cf60e90370c1786a53e75';
-const endpointPopularFilms = `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`;
+import { endpointPopularFilms } from './components/API';
 
 export class App extends Component {
   state = {
