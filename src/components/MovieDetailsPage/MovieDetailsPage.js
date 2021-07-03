@@ -21,7 +21,7 @@ export class MovieDetailsPage extends Component {
       );
       const data = await response.json();
       this.setState({
-        image: 'https://image.tmdb.org/t/p/w500/' + data.poster_path,
+        image: 'https://image.tmdb.org/t/p/w500' + data.poster_path,
         title: data.title,
         year: Number.parseInt(data.release_date),
         score: data.vote_average * 10,
@@ -70,8 +70,12 @@ export class MovieDetailsPage extends Component {
             </li>
           </ul>
         </div>
-        <Route path="/movies/:movieId/cast" exact component={Cast} />
-        <Route path="/movies/:movieId/reviews" exact component={Reviews} />
+        <Route path={`${this.props.match.path}/cast`} exact component={Cast} />
+        <Route
+          path={`${this.props.match.path}/reviews`}
+          exact
+          component={Reviews}
+        />
       </div>
     );
   }
