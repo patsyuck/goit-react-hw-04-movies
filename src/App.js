@@ -12,34 +12,63 @@ import { HomePage } from './components/HomePage';
 import { MovieDetailsPage } from './components/MovieDetailsPage';
 import { MoviesPage } from './components/MoviesPage';
 import { Reviews } from './components/Reviews';
-import { endpointPopularFilms } from './components/API';
+import {
+  endpointPopularFilms,
+  endpointSearchFilms,
+  endpointFilmInfo,
+  tailFilmInfo,
+} from './components/API';
 
 export class App extends Component {
   state = {
     loading: false,
+    home: true,
+    /*home: false,*/
+    query: '',
+    /*query: 'Tomorrow',*/
+    films: [],
+    filmId: null,
+    /*ilmId: 588288,*/
+    cast: false,
+    review: false,
   };
 
-  async handleRequest(endpoint) {
+  async handleRequest() {
     this.setState({ loading: true });
+    console.log(this.state);
     try {
-      const response = await fetch(endpoint);
-      const data = await response.json();
-      console.log(data.results);
-      /*const cards = data.hits.map(hit => ({
-        id: hit.id,
-        image: hit.webformatURL,
-        bigImage: hit.largeImageURL,
-      }));
-      this.setState({ cards: [...this.state.cards, ...cards] });*/
+      if (this.state.home === true) {
+        const response = await fetch(endpointPopularFilms);
+        const data = await response.json();
+        /*console.log(data.results);*/
+        const films = data.results.map(result => ({
+          id: result.id,
+          title: result.media_type === 'movie' ? result.title : result.name,
+        }));
+        this.setState({ films: films });
+      } else if (this.state.query !== '') {
+        const response = await fetch(
+          endpointSearchFilms + `&query=${this.state.query}`,
+        );
+        const data = await response.json();
+        console.log(data.results);
+      } else if (this.state.filmId !== null) {
+        const response = await fetch(
+          endpointFilmInfo + `${this.state.filmId}` + tailFilmInfo,
+        );
+        const data = await response.json();
+        console.log(data);
+      }
     } catch (error) {
       console.error(error);
     } finally {
       this.setState({ loading: false });
     }
+    console.log(this.state);
   }
 
   async componentDidMount() {
-    this.handleRequest(endpointPopularFilms);
+    this.handleRequest();
   }
 
   render() {
@@ -57,7 +86,11 @@ export class App extends Component {
           </ul>
         </header>
         <Switch>
-          <Route path="/" exact component={HomePage} />
+          <Route
+            path="/"
+            exact
+            render={props => <HomePage {...props} films={this.state.films} />}
+          />
           <Route path="/movies" exact component={MoviesPage} />
           <Route path="/movies/:movieId" exact component={MovieDetailsPage} />
           <Route path="/movies/:movieId/cast" exact component={Cast} />

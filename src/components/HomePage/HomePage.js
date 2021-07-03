@@ -1,12 +1,12 @@
-import { Component } from 'react';
-/*import { endpointPopularFilms } from '../API';*/
-
-export class HomePage extends Component {
-  /*async componentDidMount() {
-    this.handleRequest(endpointPopularFilms);
-  }*/
-
-  render() {
-    return <div>Home Page</div>;
-  }
-}
+export const HomePage = ({ films }) => {
+  return (
+    <div>
+      <h1>Trending Today</h1>
+      <ul>
+        {films.map(film => (
+          <li key={film.id}>{film.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
