@@ -6,41 +6,44 @@ import {
   Redirect,
   Link,
 } from 'react-router-dom';
+/*import queryString from 'query-string';*/
 import './App.css';
 import { Cast } from './components/Cast';
 import { HomePage } from './components/HomePage';
 import { MovieDetailsPage } from './components/MovieDetailsPage';
 import { MoviesPage } from './components/MoviesPage';
 import { Reviews } from './components/Reviews';
-import {
+/*import {
   endpointPopularFilms,
   endpointSearchFilms,
   endpointFilmInfo,
   tailFilmInfo,
-} from './components/API';
+} from './components/API';*/
+
+/*const getLocation = (props) => {
+  console.log(queryString.parse(props.location.search))
+};*/
 
 export class App extends Component {
-  state = {
+  /*state = {
     loading: false,
     home: true,
-    /*home: false,*/
+    home: false,
     query: '',
-    /*query: 'Tomorrow',*/
+    query: 'Tomorrow',
     films: [],
     filmId: null,
-    /*ilmId: 588288,*/
+    ilmId: 588288,
     cast: false,
     review: false,
-  };
+  };*/
 
-  async handleRequest() {
+  /*async handleRequest() {
     this.setState({ loading: true });
-    console.log(this.state);
     try {
       if (this.state.home === true) {
         const response = await fetch(endpointPopularFilms);
         const data = await response.json();
-        /*console.log(data.results);*/
         const films = data.results.map(result => ({
           id: result.id,
           title: result.media_type === 'movie' ? result.title : result.name,
@@ -52,6 +55,11 @@ export class App extends Component {
         );
         const data = await response.json();
         console.log(data.results);
+        const films = data.results.map(result => ({
+          id: result.id,
+          title: result.media_type === 'movie' ? result.title : result.name,
+        }));
+        this.setState({ films: films });
       } else if (this.state.filmId !== null) {
         const response = await fetch(
           endpointFilmInfo + `${this.state.filmId}` + tailFilmInfo,
@@ -64,12 +72,11 @@ export class App extends Component {
     } finally {
       this.setState({ loading: false });
     }
-    console.log(this.state);
-  }
+  }*/
 
-  async componentDidMount() {
+  /*async componentDidMount() {
     this.handleRequest();
-  }
+  }*/
 
   render() {
     return (
@@ -86,11 +93,7 @@ export class App extends Component {
           </ul>
         </header>
         <Switch>
-          <Route
-            path="/"
-            exact
-            render={props => <HomePage {...props} films={this.state.films} />}
-          />
+          <Route path="/" exact component={HomePage} />
           <Route path="/movies" exact component={MoviesPage} />
           <Route path="/movies/:movieId" exact component={MovieDetailsPage} />
           <Route path="/movies/:movieId/cast" exact component={Cast} />
@@ -101,6 +104,11 @@ export class App extends Component {
       /*</div>*/
     );
   }
+
+  /*async componentDidUpdate(prevProps) {
+    console.log(prevProps)
+    console.log(this.props)
+  }*/
 }
 
 export default App;
