@@ -8,76 +8,17 @@ import {
 } from 'react-router-dom';
 /*import queryString from 'query-string';*/
 import './App.css';
-import { Cast } from './components/Cast';
+/*import { Cast } from './components/Cast';*/
 import { HomePage } from './components/HomePage';
 import { MovieDetailsPage } from './components/MovieDetailsPage';
 import { MoviesPage } from './components/MoviesPage';
-import { Reviews } from './components/Reviews';
-/*import {
-  endpointPopularFilms,
-  endpointSearchFilms,
-  endpointFilmInfo,
-  tailFilmInfo,
-} from './components/API';*/
+/*import { Reviews } from './components/Reviews';*/
 
 /*const getLocation = (props) => {
   console.log(queryString.parse(props.location.search))
 };*/
 
 export class App extends Component {
-  /*state = {
-    loading: false,
-    home: true,
-    home: false,
-    query: '',
-    query: 'Tomorrow',
-    films: [],
-    filmId: null,
-    ilmId: 588288,
-    cast: false,
-    review: false,
-  };*/
-
-  /*async handleRequest() {
-    this.setState({ loading: true });
-    try {
-      if (this.state.home === true) {
-        const response = await fetch(endpointPopularFilms);
-        const data = await response.json();
-        const films = data.results.map(result => ({
-          id: result.id,
-          title: result.media_type === 'movie' ? result.title : result.name,
-        }));
-        this.setState({ films: films });
-      } else if (this.state.query !== '') {
-        const response = await fetch(
-          endpointSearchFilms + `&query=${this.state.query}`,
-        );
-        const data = await response.json();
-        console.log(data.results);
-        const films = data.results.map(result => ({
-          id: result.id,
-          title: result.media_type === 'movie' ? result.title : result.name,
-        }));
-        this.setState({ films: films });
-      } else if (this.state.filmId !== null) {
-        const response = await fetch(
-          endpointFilmInfo + `${this.state.filmId}` + tailFilmInfo,
-        );
-        const data = await response.json();
-        console.log(data);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      this.setState({ loading: false });
-    }
-  }*/
-
-  /*async componentDidMount() {
-    this.handleRequest();
-  }*/
-
   render() {
     return (
       /*<div className="App">*/
@@ -95,20 +36,13 @@ export class App extends Component {
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/movies" exact component={MoviesPage} />
-          <Route path="/movies/:movieId" exact component={MovieDetailsPage} />
-          <Route path="/movies/:movieId/cast" exact component={Cast} />
-          <Route path="/movies/:movieId/reviews" exact component={Reviews} />
+          <Route path="/movies/:movieId" component={MovieDetailsPage} />
           <Redirect to="/" />
         </Switch>
       </Router>
       /*</div>*/
     );
   }
-
-  /*async componentDidUpdate(prevProps) {
-    console.log(prevProps)
-    console.log(this.props)
-  }*/
 }
 
 export default App;

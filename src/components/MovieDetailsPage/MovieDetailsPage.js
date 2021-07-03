@@ -1,5 +1,8 @@
 import { Component } from 'react';
+import { Link, Route } from 'react-router-dom';
 import { endpointFilmInfo, tailFilmInfo } from '../API';
+import { Cast } from '../Cast';
+import { Reviews } from '../Reviews';
 
 export class MovieDetailsPage extends Component {
   state = {
@@ -56,6 +59,19 @@ export class MovieDetailsPage extends Component {
             </ul>
           </div>
         </div>
+        <div>
+          <h2>Additional information</h2>
+          <ul>
+            <li>
+              <Link to={`${this.props.match.url}/cast`}>Cast</Link>
+            </li>
+            <li>
+              <Link to={`${this.props.match.url}/reviews`}>Reviews</Link>
+            </li>
+          </ul>
+        </div>
+        <Route path="/movies/:movieId/cast" exact component={Cast} />
+        <Route path="/movies/:movieId/reviews" exact component={Reviews} />
       </div>
     );
   }
