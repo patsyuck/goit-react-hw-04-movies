@@ -8,35 +8,32 @@ export class MoviesPage extends Component {
     films: [],
   };
 
-  async handleSubmit() {
-    this.setState({ query: 'Tomorrow' });
-    try {
-      const response = await fetch(
-        endpointSearchFilms + `&query=${this.state.query}`,
-      );
-      const data = await response.json();
-      const films = data.results.map(result => ({
-        id: result.id,
-        title: result.title,
-      }));
-      this.setState({ films: films });
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  _isMounted = false;
+
+  handleSubmit = event => {
+    event.preventDefault();
+    console.log(event.target[0].value);
+    this.setState({ query: event.target[0].value });
+  };
 
   async componentDidMount() {
-    /*try {
-      const response = await fetch(endpointSearchFilms + `&query=${query}`);
-      const data = await response.json();
-      const films = data.results.map(result => ({
-        id: result.id,
-        title: result.title,
-      }));
-      this.setState({ films: films });
-    } catch (error) {
-      console.error(error);
-    }*/
+    this._isMounted = true;
+
+    if (this.state.query !== '') {
+      try {
+        const response = await fetch(
+          endpointSearchFilms + `&query=${this.state.query}`,
+        );
+        const data = await response.json();
+        const films = data.results.map(result => ({
+          id: result.id,
+          title: result.title,
+        }));
+        this.setState({ films: films });
+      } catch (error) {
+        console.error(error);
+      }
+    }
   }
 
   render() {
@@ -67,16 +64,25 @@ export class MoviesPage extends Component {
   }
 
   async componentDidUpdate() {
-    /*try {
-      const response = await fetch(endpointSearchFilms + `&query=${this.state.query}`);
+    try {
+      const response = await fetch(
+        endpointSearchFilms + `&query=${this.state.query}`,
+      );
       const data = await response.json();
-      const films = data.results.map(result => ({
-        id: result.id,
-        title: result.title,
-      }));
-      this.setState({ films: films });
+      if (this._isMounted) {
+        /* попереджає витік пам'яті */
+        const films = data.results.map(result => ({
+          id: result.id,
+          title: result.title,
+        }));
+        this.setState({ films: films });
+      }
     } catch (error) {
       console.error(error);
-    }*/
+    }
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 }
