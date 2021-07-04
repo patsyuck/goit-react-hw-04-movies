@@ -21,7 +21,11 @@ export class MovieDetailsPage extends Component {
   };
 
   async componentDidMount() {
-    this.setState({ from: this.props.location.state.from });
+    if (this.props.location.state && this.props.location.state.from) {
+      this.setState({ from: this.props.location.state.from });
+    } else {
+      this.setState({ from: '/' });
+    }
     try {
       const response = await fetch(
         endpointFilmInfo + `${this.props.match.params.movieId}` + tailFilmInfo,
