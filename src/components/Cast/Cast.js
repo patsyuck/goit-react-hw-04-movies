@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { endpointFilmInfo, tailFilmActors } from '../API';
+import './Cast.css';
 
 export class Cast extends Component {
   state = {
@@ -30,15 +31,18 @@ export class Cast extends Component {
   render() {
     return (
       <div>
-        <ul>
+        <ol className="filmActors">
           {this.state.actors.map(actor => (
             <li key={actor.id} id={actor.cast_id}>
-              <img src={actor.image} alt=""></img>
+              <img
+                src={actor.image}
+                alt="Sorry, we don't have any photo of this actor"
+              ></img>
               <p>{actor.name}</p>
               <p>Character: {actor.character}</p>
             </li>
           ))}
-        </ul>
+        </ol>
       </div>
     );
   }
