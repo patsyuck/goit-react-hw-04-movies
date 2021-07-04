@@ -13,9 +13,15 @@ export class MovieDetailsPage extends Component {
     score: null,
     overview: '',
     genres: [],
+    from: '',
+  };
+
+  handleGoBack = () => {
+    this.props.history.push(this.state.from);
   };
 
   async componentDidMount() {
+    this.setState({ from: this.props.location.state.from });
     try {
       const response = await fetch(
         endpointFilmInfo + `${this.props.match.params.movieId}` + tailFilmInfo,
@@ -27,7 +33,6 @@ export class MovieDetailsPage extends Component {
         year: Number.parseInt(data.release_date),
         score: data.vote_average * 10,
         overview: data.overview,
-        /*genres: data.genres.map(genre => genre.name)*/
         genres: data.genres.map(genre => ({
           id: genre.id,
           name: genre.name,
@@ -42,7 +47,9 @@ export class MovieDetailsPage extends Component {
     const { image, title, year, score, overview, genres } = this.state;
     return (
       <div>
-        <button onClick={this.props.history.goBack}>&larr; Go back</button>
+        <button type="button" onClick={this.handleGoBack}>
+          &larr; Go back
+        </button>
         <div className="filmInfo">
           <img src={image} alt=""></img>
           <div>
