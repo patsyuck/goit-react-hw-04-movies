@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { endpointSearchFilms } from '../API';
 
-export class MoviesPage extends Component {
+export default class MoviesPage extends Component {
   state = {
     query: '',
     films: [],

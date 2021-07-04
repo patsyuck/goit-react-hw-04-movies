@@ -5,7 +5,7 @@ import { Cast } from '../Cast';
 import { Reviews } from '../Reviews';
 import './MovieDetailsPage.css';
 
-export class MovieDetailsPage extends Component {
+export default class MovieDetailsPage extends Component {
   state = {
     image: '',
     title: '',
