@@ -3,6 +3,7 @@ import { Link, Route } from 'react-router-dom';
 import { endpointFilmInfo, tailFilmInfo } from '../API';
 import { Cast } from '../Cast';
 import { Reviews } from '../Reviews';
+import './MovieDetailsPage.css';
 
 export class MovieDetailsPage extends Component {
   state = {
@@ -21,7 +22,7 @@ export class MovieDetailsPage extends Component {
       );
       const data = await response.json();
       this.setState({
-        image: 'https://image.tmdb.org/t/p/w500' + data.poster_path,
+        image: 'https://image.tmdb.org/t/p/w300' + data.poster_path,
         title: data.title,
         year: Number.parseInt(data.release_date),
         score: data.vote_average * 10,
@@ -41,18 +42,18 @@ export class MovieDetailsPage extends Component {
     const { image, title, year, score, overview, genres } = this.state;
     return (
       <div>
-        <button onClick={this.props.history.goBack}>Go back</button>
-        <div>
+        <button onClick={this.props.history.goBack}>&larr; Go back</button>
+        <div className="filmInfo">
           <img src={image} alt=""></img>
           <div>
             <h1>
               {title} ({year})
             </h1>
-            <p>User score: {score} %</p>
+            <p>User score: {score}%</p>
             <h2>Overview</h2>
             <p>{overview}</p>
             <h2>Genres</h2>
-            <ul>
+            <ul className="filmGenres">
               {genres.map(genre => (
                 <li key={genre.id}>{genre.name}</li>
               ))}
@@ -60,7 +61,7 @@ export class MovieDetailsPage extends Component {
           </div>
         </div>
         <div>
-          <h2>Additional information</h2>
+          <h3>Additional information</h3>
           <ul>
             <li>
               <Link to={`${this.props.match.url}/cast`}>Cast</Link>

@@ -1,0 +1,17 @@
+.filmInfo,
+.filmGenres {
+  display: flex;
+}
+
+.filmInfo img {
+  margin-right: 20px;
+}
+
+.filmGenres {
+  padding: 0;
+}
+
+.filmGenres li {
+  list-style-type: none;
+  margin-right: 20px;
+}
