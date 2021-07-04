@@ -12,14 +12,16 @@ export class MoviesPage extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log(event.target[0].value);
     this.setState({ query: event.target[0].value });
   };
 
-  async componentDidMount() {
+  /*async*/ componentDidMount() {
     this._isMounted = true;
-
-    if (this.state.query !== '') {
+    this.setState({
+      films: JSON.parse(sessionStorage.getItem('films')) || [],
+      /*query: JSON.parse(sessionStorage.getItem('query')) || '',*/
+    });
+    /*if (this.state.query !== '') {
       try {
         const response = await fetch(
           endpointSearchFilms + `&query=${this.state.query}`,
@@ -33,7 +35,7 @@ export class MoviesPage extends Component {
       } catch (error) {
         console.error(error);
       }
-    }
+    }*/
   }
 
   render() {
@@ -64,25 +66,29 @@ export class MoviesPage extends Component {
   }
 
   async componentDidUpdate() {
-    try {
-      const response = await fetch(
-        endpointSearchFilms + `&query=${this.state.query}`,
-      );
-      const data = await response.json();
-      if (this._isMounted) {
-        /* попереджає витік пам'яті */
-        const films = data.results.map(result => ({
-          id: result.id,
-          title: result.title,
-        }));
-        this.setState({ films: films });
+    if (this.state.query !== '') {
+      try {
+        const response = await fetch(
+          endpointSearchFilms + `&query=${this.state.query}`,
+        );
+        const data = await response.json();
+        if (this._isMounted) {
+          /* попереджає витік пам'яті */
+          const films = data.results.map(result => ({
+            id: result.id,
+            title: result.title,
+          }));
+          this.setState({ films: films });
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
     }
   }
 
   componentWillUnmount() {
+    sessionStorage.setItem('films', JSON.stringify(this.state.films));
+    /*sessionStorage.setItem('query', JSON.stringify(this.state.query));*/
     this._isMounted = false;
   }
 }
