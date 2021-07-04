@@ -19,24 +19,25 @@ export class Reviews extends Component {
         content: review.content,
       }));
       this.setState({ reviews: reviews });
-      console.log(this.state);
     } catch (error) {
       console.error(error);
     }
   }
 
   render() {
-    return (
+    return this.state.reviews.length > 0 ? (
       <div>
-        <ul>
+        <ol className="filmReviews">
           {this.state.reviews.map(review => (
             <li>
               <p>Author: {review.author}</p>
               <p>{review.content}</p>
             </li>
           ))}
-        </ul>
+        </ol>
       </div>
+    ) : (
+      <div>Sorry, we don't have any reviews for this movie.</div>
     );
   }
 }

@@ -36,7 +36,7 @@ export class Cast extends Component {
             <li key={actor.id} id={actor.cast_id}>
               <img
                 src={actor.image}
-                alt="Sorry, we don't have any photo of this actor"
+                alt="Sorry, we have some problems with loading"
               ></img>
               <p>{actor.name}</p>
               <p>Character: {actor.character}</p>
