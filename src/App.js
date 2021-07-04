@@ -6,30 +6,26 @@ import {
   Redirect,
   Link,
 } from 'react-router-dom';
-/*import queryString from 'query-string';*/
 import './App.css';
-/*import { Cast } from './components/Cast';*/
 import { HomePage } from './components/HomePage';
 import { MovieDetailsPage } from './components/MovieDetailsPage';
 import { MoviesPage } from './components/MoviesPage';
-/*import { Reviews } from './components/Reviews';*/
-
-/*const getLocation = (props) => {
-  console.log(queryString.parse(props.location.search))
-};*/
 
 export class App extends Component {
   render() {
     return (
-      /*<div className="App">*/
       <Router>
         <header>
-          <ul>
+          <ul className="mainNav">
             <li>
-              <Link to="/">Home</Link>
+              <Link className="mainNavLink" to="/">
+                Home
+              </Link>
             </li>
             <li>
-              <Link to="/movies">Movies</Link>
+              <Link className="mainNavLink" to="/movies">
+                Movies
+              </Link>
             </li>
           </ul>
         </header>
@@ -40,7 +36,6 @@ export class App extends Component {
           <Redirect to="/" />
         </Switch>
       </Router>
-      /*</div>*/
     );
   }
 }
